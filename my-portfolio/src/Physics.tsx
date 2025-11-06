@@ -76,7 +76,7 @@ const PhysicsLetters: React.FC = () => {
       Matter.World.clear(world, false);
       Matter.Engine.clear(engine);
     };
-  }, []);
+  });
 
   return (
   <div className="physics-container">
