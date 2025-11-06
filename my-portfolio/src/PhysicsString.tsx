@@ -14,8 +14,8 @@ export class PhysicsString extends PhysicsObject {
     super(color);
     this.str = str;
     this.createBody(x, y, world);
-    Matter.Body.setVelocity(this.body, { x: Math.random() * 2 - 1, y: -5 });
-    console.log(`Created physics object at ${x} ${y} ${this.body.isStatic}`);
+    Matter.Body.setVelocity(this.body, { x: (Math.random() * 2 - 1), y: -5 });
+    console.log(`Created physics object at ${x} ${y} with string: ${str}`);
   }
 
   createBody(x: number, y: number, world: Matter.World) {

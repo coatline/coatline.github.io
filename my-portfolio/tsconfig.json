@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
+    "composite": true,
+    "outDir": "dist",
+    "rootDir": "src",
     "target": "ESNext",
     "module": "ESNext",
-    "lib": ["DOM", "ESNext"],
     "jsx": "react-jsx",
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -11,10 +13,6 @@
     "esModuleInterop": true,
     "skipLibCheck": true
   },
-  "files": [],
   "include": ["src"],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  "exclude": ["node_modules", "dist"]
 }
