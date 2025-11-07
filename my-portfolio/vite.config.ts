@@ -10,5 +10,5 @@ export default defineConfig({
       },
     }),
   ],
-  base: '/coatline.github.io/'
+  base: '/'
 })

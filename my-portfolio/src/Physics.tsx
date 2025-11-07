@@ -3,7 +3,7 @@ import Matter from "matter-js";
 import { PhysicsString } from "./PhysicsString"
 import { PhysicsObject } from "./PhysicsObject";
 
-const LETTERS = "MINECRAFT";
+const LETTERS = "Coatline";
 
 
 // TODO: Make bubbles that when you click on them they pop and show text
@@ -20,6 +20,7 @@ const PhysicsLetters: React.FC = () => {
     return newString;
   }
 
+  const mouse = { x: 0, y: 0 }
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const engineRef = useRef<Matter.Engine | null>(null);
   const bodies: PhysicsObject[] = [];
@@ -42,18 +43,43 @@ const PhysicsLetters: React.FC = () => {
     engineRef.current = engine;
     engine.gravity.y = 1;
     
-    const ground = Matter.Bodies.rectangle(width / 2, height - 30, width, 60, {
+    canvas.addEventListener("mousemove", (e) => {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+
+  canvas.addEventListener("mousedown", () => {
+    for (const obj of bodies) {
+      const body = obj.body;
+      const isInside =
+        Matter.Bounds.contains(body.bounds, mouse) &&
+        Matter.Vertices.contains(body.vertices, mouse);
+
+      if (isInside) {
+        Matter.Body.applyForce(body, body.position, { x: 0, y: -0.15 });
+        break;
+      }
+    }
+  });
+
+    const ground = Matter.Bodies.rectangle(width / 2, height - 30 - Math.random() * 5, width, 60, {
       isStatic: true,
     });
 
+    const mouseCursor = Matter.Bodies.circle(mouse.x, mouse.y, 5, {
+      isStatic: false,
+    });
+
     Matter.World.add(world, ground);
-    
+    Matter.World.add(world, mouseCursor);
+
     for(let i = 0; i < LETTERS.length; i++) {
       const letter = LETTERS[i];
-      CreatePhysicsString(letter, 100 + i * 60, 50, world, "#0099ffff");
+      CreatePhysicsString(letter, 100 + i * 20, 50, world, "#0099ffff");
     }
 
-    CreatePhysicsString("Coatline", 50, 50, world, "#0099ffff");
+    CreatePhysicsString("Coatline", canvas.width/2, 50, world, "#0099ffff");
 
     Matter.Runner.run(engine);
     
@@ -62,6 +88,8 @@ const PhysicsLetters: React.FC = () => {
       ctx.clearRect(0, 0, width, height);
       ctx.fillStyle = "#555";
       ctx.fillRect(0, height - 60, width, 60);
+
+      mouseCursor.position = mouse;
 
       bodies.forEach((obj: PhysicsObject) => {
         obj.updateVisuals(ctx);
