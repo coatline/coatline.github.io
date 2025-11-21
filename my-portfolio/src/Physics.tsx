@@ -25,14 +25,7 @@ const PhysicsLetters: React.FC = () => {
   const engineRef = useRef<Matter.Engine | null>(null);
   const bodies: PhysicsObject[] = [];
 
-  const initialized = useRef(false);
-
   useEffect(() => {
-    if (initialized.current == false){
-      initialized.current = true;
-      return;
-    }
-  
     const canvas = canvasRef.current!;
     const ctx = canvas.getContext("2d")!;
     const width = canvas.width;
