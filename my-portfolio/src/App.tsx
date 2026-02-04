@@ -4,7 +4,7 @@ import Physics from "./Physics";
 const App: React.FC = () => {
   return (
     <div>
-      <h1>Coatline!</h1>
+      {/* <h1 className="header">Coatline!</h1> */}
       <Physics />
     </div>
   );

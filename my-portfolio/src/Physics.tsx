@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
-import Matter from "matter-js";
 import { PhysicsString } from "./PhysicsString"
 import { PhysicsObject } from "./PhysicsObject";
+import Matter from "matter-js";
 
 const LETTERS = "Coatline";
 
@@ -32,15 +32,27 @@ const PhysicsLetters: React.FC = () => {
     const height = canvas.height;
 
     const engine = Matter.Engine.create();
+    const renderer = Matter.Render.create({
+      canvas: canvas,
+      engine: engine,
+      options: {
+        width: width,
+        height: height,
+        wireframes: false,
+        background: "transparent",
+      },
+    });
+    
     const world = engine.world;
     engineRef.current = engine;
     engine.gravity.y = 1;
     
     canvas.addEventListener("mousemove", (e) => {
-    const rect = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
-  });
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+    }
+  );
 
   canvas.addEventListener("mousedown", () => {
     for (const obj of bodies) {
@@ -73,13 +85,14 @@ const PhysicsLetters: React.FC = () => {
     }
 
     CreatePhysicsString("Coatline", canvas.width/2, 50, world, "#0099ffff");
+    CreatePhysicsString("Start!", width / 2, height / 2, world, "#0099ffff");
 
     Matter.Runner.run(engine);
     
     const renderLoop = () => {
       Matter.Engine.update(engine, 15);
       ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = "#555";
+      ctx.fillStyle = "#e10000";
       ctx.fillRect(0, height - 60, width, 60);
 
       mouseCursor.position = mouse;
@@ -103,8 +116,8 @@ const PhysicsLetters: React.FC = () => {
   <div className="physics-container">
     <canvas
       ref={canvasRef}
-      width={800}
-      height={600}
+      width={window.innerWidth}
+      height={window.innerHeight}
       className="physics-canvas"
     />
     <div className="letters-overlay">

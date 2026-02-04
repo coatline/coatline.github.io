@@ -11,7 +11,6 @@ export abstract class PhysicsObject {
   abstract createBody(x: number, y: number, world: Matter.World): void;
 
   updateVisuals(ctx: CanvasRenderingContext2D) {
-    console.log("Kinda rendering??");
     const { position, angle } = this.body;
 
     ctx.save();
