@@ -58,7 +58,7 @@ const PhysicsLetters: React.FC = () => {
       const isInside =
         Matter.Bounds.contains(body.bounds, mouse) &&
         Matter.Vertices.contains(body.vertices, mouse);
-
+        
       if (isInside) {
         obj.mouseClickedOn(mouse);
       }
