@@ -7,23 +7,22 @@ const LETTERS = "Coatline";
 
 
 // TODO: Make bubbles that when you click on them they pop and show text
+// TODO: Make it to where you can type and the letters fall down as physics objects when you are finished typing
 const PhysicsLetters: React.FC = () => {
 
-  function CreatePhysicsString(str: string,
-    x: number,
-    y: number,
-    world: Matter.World,
-    color = "#0099ffff"): PhysicsString {
-    const newString = new PhysicsString(str, x, y, world, color);
-    bodies.push(newString);
-    console.log(bodies.length);
-    return newString;
+  // Matter.Body.setVelocity(this.body, { x: (Math.random() * 2 - 1), y: -5 });
+
+  function AddPhysicsObject(obj: PhysicsObject, velocity?: {x: number, y: number}) {
+    if (velocity) {
+      Matter.Body.setVelocity(obj.body, velocity);
+    }
+    physicsObjects.push(obj);
   }
 
   const mouse = { x: 0, y: 0 }
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const engineRef = useRef<Matter.Engine | null>(null);
-  const bodies: PhysicsObject[] = [];
+  const physicsObjects: PhysicsObject[] = [];
 
   useEffect(() => {
     const canvas = canvasRef.current!;
@@ -55,15 +54,14 @@ const PhysicsLetters: React.FC = () => {
   );
 
   canvas.addEventListener("mousedown", () => {
-    for (const obj of bodies) {
+    for (const obj of physicsObjects) {
       const body = obj.body;
       const isInside =
         Matter.Bounds.contains(body.bounds, mouse) &&
         Matter.Vertices.contains(body.vertices, mouse);
 
       if (isInside) {
-        Matter.Body.applyForce(body, body.position, { x: 0, y: -0.15 });
-        break;
+        obj.mouseClickedOn(mouse);
       }
     }
   });
@@ -72,20 +70,15 @@ const PhysicsLetters: React.FC = () => {
       isStatic: true,
     });
 
-    const mouseCursor = Matter.Bodies.circle(mouse.x, mouse.y, 5, {
-      isStatic: false,
-    });
-
     Matter.World.add(world, ground);
-    Matter.World.add(world, mouseCursor);
 
     for(let i = 0; i < LETTERS.length; i++) {
       const letter = LETTERS[i];
-      CreatePhysicsString(letter, 100 + i * 20, 50, world, "#0099ffff");
+      AddPhysicsObject(new PhysicsString(letter, 100 + i * 20, 50, world, true, false, "rgb(0, 255, 110)"));
     }
 
-    CreatePhysicsString("Coatline", canvas.width/2, 50, world, "#0099ffff");
-    CreatePhysicsString("Start!", width / 2, height / 2, world, "#0099ffff");
+    AddPhysicsObject(new PhysicsString("Coatline", width / 2, 50, world, false, false, "rgb(255, 204, 0)"));
+    AddPhysicsObject(new PhysicsString("Start!", width / 2, 100, world, true, false, "#0099ffff"));
 
     Matter.Runner.run(engine);
     
@@ -95,10 +88,14 @@ const PhysicsLetters: React.FC = () => {
       ctx.fillStyle = "#e10000";
       ctx.fillRect(0, height - 60, width, 60);
 
-      mouseCursor.position = mouse;
+      physicsObjects.forEach((obj: PhysicsObject) => {
+        const body = obj.body;
+        const isInside = Matter.Bounds.contains(body.bounds, mouse) && Matter.Vertices.contains(body.vertices, mouse);
 
-      bodies.forEach((obj: PhysicsObject) => {
-        obj.updateVisuals(ctx);
+        if (isInside)
+          obj.mouseEntered(mouse);
+
+        obj.update(ctx);
       });
 
       requestAnimationFrame(renderLoop);
@@ -120,26 +117,6 @@ const PhysicsLetters: React.FC = () => {
       height={window.innerHeight}
       className="physics-canvas"
     />
-    <div className="letters-overlay">
-      {LETTERS.split("").map((letter, idx) => (
-        <span
-          key={idx}
-          onMouseEnter={(e) => {
-            console.log(`ENTERED! ${engineRef.current}`);
-            if (!engineRef.current) return;
-
-            const rect = (e.target as HTMLElement).getBoundingClientRect();
-            const parentRect = canvasRef.current!.getBoundingClientRect();
-            const x = rect.left - parentRect.left + rect.width / 2;
-            const y = rect.top - parentRect.top + rect.height / 2;
-
-            CreatePhysicsString(letter, x, y, engineRef.current.world, "#0099ffff");
-          }}
-        >
-          {letter}
-        </span>
-      ))}
-    </div>
   </div>
 );
 };

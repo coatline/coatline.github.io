@@ -1,6 +1,6 @@
 # 🚀 My Portfolio Website
 
-A high-performance portfolio built with Vite and vanilla JavaScript.
+A high-performance portfolio built with Vite & Matter.
 
 [View Live Demo](https://coatline.github.io)
 
@@ -29,3 +29,7 @@ To ensure the code is functional and bug-free, use the following commands:
 * `/public` - Static assets not processed by Vite like your favicon.
 * `index.html` - The entry point for the browser.
 * `vite.config.js` - The configuration file for project settings.
+
+## Deployment
+
+* Run `npm run deploy`

@@ -4,32 +4,36 @@ import {PhysicsObject} from "./PhysicsObject"
 export class PhysicsString extends PhysicsObject {
   str: string;
   font: string;
+  isSleeping: boolean;
 
   constructor(
     str: string,
     x: number,
     y: number,
     world: Matter.World,
+    isSleeping: boolean = false,
+    crumble: boolean = false,
     color = "#ff6347"
   ) {
     super(color);
     this.str = str;
     this.font = "24px Arial";
+    this.isSleeping = isSleeping;
     this.createBody(x, y, world);
-    Matter.Body.setVelocity(this.body, { x: (Math.random() * 2 - 1), y: -5 });
-    console.log(`Created physics object at ${x} ${y} with string: ${str}`);
+    // console.log(`Created physics object at ${x} ${y} with string: ${str}`);
   }
 
-  createBody(x: number, y: number, world: Matter.World) {
+  createBody(x: number, y: number, world: Matter.World): void {
     const size = this.measureTextSize(this.str, this.font);
     this.body = Matter.Bodies.rectangle(x, y, size.width, size.height, {
       restitution: 0.9,
       friction: 0.1,
+      isSleeping: this.isSleeping,
     });
     Matter.World.add(world, this.body);
   }
 
-  updateVisuals(ctx: CanvasRenderingContext2D) {
+  update(ctx: CanvasRenderingContext2D) {
     const { position, angle } = this.body;
     ctx.save();
     ctx.translate(position.x, position.y);
@@ -50,5 +54,17 @@ export class PhysicsString extends PhysicsObject {
     const width = metrics.width;
     const height = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
     return { width: width * 0.75, height: height * 0.7 };
+  }
+
+  mouseExited(mousePos: { x: number; y: number; }): void {
+  }
+
+  mouseEntered(mousePos: { x: number; y: number; }): void {
+    this.body.isSleeping = false;
+  }
+
+  mouseClickedOn(mousePos: { x: number; y: number; }): void {
+    this.body.isSleeping = false;
+    Matter.Body.applyForce(this.body, this.body.position, { x: 0, y: -0.05 * this.body.mass });
   }
 }

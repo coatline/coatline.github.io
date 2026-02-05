@@ -9,8 +9,11 @@ export abstract class PhysicsObject {
   }
 
   abstract createBody(x: number, y: number, world: Matter.World): void;
+  abstract mouseExited(mousePos: {x: number, y: number}): void;
+  abstract mouseEntered(mousePos: {x: number, y: number}): void;
+  abstract mouseClickedOn(mousePos: {x: number, y: number}): void;
 
-  updateVisuals(ctx: CanvasRenderingContext2D) {
+  update(ctx: CanvasRenderingContext2D) {
     const { position, angle } = this.body;
 
     ctx.save();
