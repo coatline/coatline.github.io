@@ -4,10 +4,12 @@ import {PhysicsObject} from "./PhysicsObject"
 export class PhysicsString extends PhysicsObject {
   str: string;
   font: string;
+  crumble: boolean;
   isSleeping: boolean;
 
   constructor(
     str: string,
+    font: string,
     x: number,
     y: number,
     world: Matter.World,
@@ -17,7 +19,8 @@ export class PhysicsString extends PhysicsObject {
   ) {
     super(color);
     this.str = str;
-    this.font = "24px Arial";
+    this.font = font;
+    this.crumble = crumble;
     this.isSleeping = isSleeping;
     this.createBody(x, y, world);
     // console.log(`Created physics object at ${x} ${y} with string: ${str}`);
@@ -25,8 +28,8 @@ export class PhysicsString extends PhysicsObject {
 
   createBody(x: number, y: number, world: Matter.World): void {
     const size = this.measureTextSize(this.str, this.font);
-    this.body = Matter.Bodies.rectangle(x, y, size.width, size.height, {
-      restitution: 0.9,
+    this.body = Matter.Bodies.rectangle(x, y, size.width + 8, size.height + 8, {
+      restitution: 0.95,
       friction: 0.1,
       isSleeping: this.isSleeping,
     });

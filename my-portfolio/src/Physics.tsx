@@ -10,12 +10,11 @@ const LETTERS = "Coatline";
 // TODO: Make it to where you can type and the letters fall down as physics objects when you are finished typing
 const PhysicsLetters: React.FC = () => {
 
-  // Matter.Body.setVelocity(this.body, { x: (Math.random() * 2 - 1), y: -5 });
-
   function AddPhysicsObject(obj: PhysicsObject, velocity?: {x: number, y: number}) {
     if (velocity) {
       Matter.Body.setVelocity(obj.body, velocity);
     }
+
     physicsObjects.push(obj);
   }
 
@@ -66,6 +65,14 @@ const PhysicsLetters: React.FC = () => {
     }
   });
 
+  Matter.Events.on(engine, 'collisionStart', (event) => {
+    // const bg = document.getElementById('bg-canvas-layer');
+    // bg.style.backgroundColor = '#1a1a2e';
+    // setTimeout(() => {
+    //   bg.style.backgroundColor = '#0a0a0a';
+    // }, 100);
+  });
+
     const ground = Matter.Bodies.rectangle(width / 2, height - 30 - Math.random() * 5, width, 60, {
       isStatic: true,
     });
@@ -74,18 +81,18 @@ const PhysicsLetters: React.FC = () => {
 
     for(let i = 0; i < LETTERS.length; i++) {
       const letter = LETTERS[i];
-      AddPhysicsObject(new PhysicsString(letter, 100 + i * 20, 50, world, true, false, "rgb(0, 255, 110)"));
+      AddPhysicsObject(new PhysicsString(letter, "24px Arial", 100 + i * 20, 50, world, true, false, "rgb(0, 255, 110)"));
     }
 
-    AddPhysicsObject(new PhysicsString("Coatline", width / 2, 50, world, false, false, "rgb(255, 204, 0)"));
-    AddPhysicsObject(new PhysicsString("Start!", width / 2, 100, world, true, false, "#0099ffff"));
+    AddPhysicsObject(new PhysicsString("Coatline", "204px Arial", width / 2, height / 3, world, false, false, "rgb(255, 204, 0)"));
+    AddPhysicsObject(new PhysicsString("Start!", "52px Arial", width / 2, height / 2, world, true, false, "#0099ffff"));
 
     Matter.Runner.run(engine);
     
     const renderLoop = () => {
       Matter.Engine.update(engine, 15);
       ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = "#e10000";
+      ctx.fillStyle = "#000000";
       ctx.fillRect(0, height - 60, width, 60);
 
       physicsObjects.forEach((obj: PhysicsObject) => {
