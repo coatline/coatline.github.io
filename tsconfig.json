@@ -1,0 +1,14 @@
+{
+  "extends": "astro/tsconfigs/strictest",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "jsxImportSource": "svelte",
+    "moduleResolution": "node",
+    "types": ["astro/client"]
+  },
+  "plugins": [
+    {
+      "name": "@astrojs/ts-plugin"
+    }
+  ]
+}

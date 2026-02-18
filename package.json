@@ -1,0 +1,22 @@
+{
+  "name": "dangerous-disk",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/svelte": "^7.2.5",
+    "astro": "^5.17.1",
+    "matter-js": "^0.20.0",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@tsconfig/svelte": "^5.0.8",
+    "@types/matter-js": "^0.20.2",
+    "svelte": "^5.51.5"
+  }
+}
