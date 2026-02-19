@@ -43,10 +43,12 @@ All commands are run from the root of the project, from a terminal:
 Title Screen: Coatline
     Overview
     Linkes (Resume, LinkedIn, GitHub)
-    Start Button  (all letters turn to physics objects and fade out)
+    Start Button (scrolls down)
 Projects
 Education Timeline
 Work Experience
 
 Skills
 Contact Form/Info
+
+When text objects touch the top of the screen, they fall down. When the top of the screen reaches above where they should normally be, they cleanly interpolate and snap back into that position.
