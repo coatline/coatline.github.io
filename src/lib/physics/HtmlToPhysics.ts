@@ -1,4 +1,5 @@
 import { PhysicsString } from "./PhysicsString";
+import {PhysicsButton} from "./PhysicsButton"
 import { Physics } from "./Physics";
 
 export class HtmlToPhysics {
@@ -9,13 +10,15 @@ export class HtmlToPhysics {
   }
 
   initialize() {
-    // 1. Grab all elements with the class
     const elements = document.querySelectorAll(".physical");
-    elements.forEach((el) => {this.convertToPhysics(el as HTMLElement)});
+    elements.forEach((el) => {
+      this.convertToPhysics(el as HTMLElement);
+    });
   }
 
   convertToPhysics(element: HTMLElement) {
-    // 2. Get the exact coordinates and size
+    if (element.dataset.physics === "processed") return;
+
     const rect = element.getBoundingClientRect();
     const x = rect.left + rect.width / 2;
     const y = rect.top + rect.height / 2;
@@ -23,22 +26,40 @@ export class HtmlToPhysics {
     const text = element.textContent || "";
     const style = window.getComputedStyle(element);
     const font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
-    console.log(style.color);
 
-    const obj = new PhysicsString(
-      text,
-      font,
-      x,
-      y + window.scrollY, // Add scroll because BoundingRect is relative to viewport
-      this.physics.world,
-      true, // Start sleeping
-      false,
-      style.color,
-    );
+    let obj: PhysicsObject;
+    let objY: number = y + window.scrollY; // Add scroll because BoundingRect is relative to viewport
 
-    this.physics.add(obj);
+    if (element.tagName === "BUTTON") {
+      obj = new PhysicsButton(
+        text,
+        font,
+        x,
+        objY,
+        rect.width,
+        rect.height,
+        this.physics.world,
+        false,
+        style.backgroundColor,
+        style.color
+      );
+    } else {
+      obj = new PhysicsString(
+        text,
+        font,
+        x,
+        objY,
+        this.physics.world,
+        true,
+        style.color,
+      );
+    }
 
-    // 4. Hide the original HTML so it doesn't double up
-    (element as HTMLElement).style.opacity = "0";
+    if (obj) {
+      this.physics.add(obj);
+      element.dataset.physics = "processed";
+      element.style.opacity = "0";
+      element.style.pointerEvents = "none"; // Stop HTML from blocking canvas clicks
+    }
   }
 }

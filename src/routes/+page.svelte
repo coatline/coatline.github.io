@@ -13,6 +13,15 @@
 	<Canvas />
 	<h1 class="physical">Coatline</h1>
 	<button class="physical">Start</button>
+	<button class="physical">Start</button>
+	<button class="physical">Start</button>
+	<button class="physical">Start</button>
+	<button class="physical">Start</button>
+	<button class="physical">Start</button>
+	<button class="physical">Start</button>
+	<button class="physical">Start</button>
+	<button class="physical">Start</button>
+	<button class="physical">Start</button>
 </section>
 
 <style>
@@ -30,7 +39,7 @@
 		font-family: Arial, Helvetica, sans-serif;
 		text-align: center;
 		font-weight: bold;
-		color: "#ff6347";
+		color: #ff6347;
 	}
 
 	button{

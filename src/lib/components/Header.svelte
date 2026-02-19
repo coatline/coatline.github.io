@@ -6,14 +6,14 @@
 </script>
 
 <header>
-	<div class="corner">
+	<!-- <div class="corner">
 		<a href="https://svelte.dev/docs/kit">
 			<img src={logo} alt="SvelteKit" />
 		</a>
-	</div>
+	</div> -->
 
 	<div class="corner">
-		<a href="https://github.com/sveltejs/kit">
+		<a href="https://github.com/coatline" target="_blank">
 			<img src={github} alt="GitHub" />
 		</a>
 	</div>

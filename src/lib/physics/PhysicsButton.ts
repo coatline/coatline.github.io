@@ -6,9 +6,8 @@ export class PhysicsButton extends PhysicsObject {
   font: string;
   width: number;
   height: number;
-  padding: number;
-  text_color: string;
   borderRadius: number;
+  text_color: string;
 
   constructor(
     str: string,
@@ -18,27 +17,33 @@ export class PhysicsButton extends PhysicsObject {
     width: number,
     height: number,
     world: Matter.World,
+    isSleeping: boolean = false,
     color = "#ff6347",
     text_color = "#ffffff"
   ) {
-    super(color);
+    super(x, y, world, isSleeping, color);
+    
     this.str = str;
     this.font = font;
     this.width = width;
     this.height = height;
-    this.padding = 10;
     this.borderRadius = 8;
     this.text_color = text_color;
-    this.createBody(x, y, world);
+
+    this.body = this.createBody(x, y, world);
+    this.anchor = this.createAnchor(x, y, world);
   }
 
-  createBody(x: number, y: number, world: Matter.World): void {
-    this.body = Matter.Bodies.rectangle(x, y, this.width, this.height, {
+  createBody(x: number, y: number, world: Matter.World): Matter.Body {
+    let body = Matter.Bodies.rectangle(x, y, this.width, this.height, {
       restitution: 0.5,
       friction: 0.1,
-      chamfer: { radius: this.borderRadius } // Rounds the physics corners
+      isSleeping: this.isSleeping,
+      chamfer: { radius: this.borderRadius } 
     });
-    Matter.World.add(world, this.body);
+    
+    Matter.World.add(world, body);
+    return body;
   }
 
   update(ctx: CanvasRenderingContext2D) {
@@ -48,12 +53,13 @@ export class PhysicsButton extends PhysicsObject {
     ctx.translate(position.x, position.y);
     ctx.rotate(angle);
 
-    // 1. Draw the Button Body (The Box)
+    // Draw Box
     ctx.fillStyle = this.color;
     this.drawRoundedRect(ctx, -this.width / 2, -this.height / 2, this.width, this.height, this.borderRadius);
     ctx.fill();
 
-    ctx.fillStyle = "#ffffff";
+    // Draw Text using the property
+    ctx.fillStyle = this.text_color;
     ctx.font = this.font;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
@@ -62,7 +68,6 @@ export class PhysicsButton extends PhysicsObject {
     ctx.restore();
   }
 
-  // Helper to draw the button shape with rounded corners
   private drawRoundedRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
     ctx.beginPath();
     ctx.moveTo(x + r, y);
@@ -75,18 +80,5 @@ export class PhysicsButton extends PhysicsObject {
     ctx.lineTo(x, y + r);
     ctx.quadraticCurveTo(x, y, x + r, y);
     ctx.closePath();
-  }
-
-  mouseExited(mousePos: { x: number; y: number }): void {}
-
-  mouseEntered(mousePos: { x: number; y: number }): void {
-    this.body.isSleeping = false;
-  }
-
-  mouseClickedOn(mousePos: { x: number; y: number }): void {
-    this.body.isSleeping = false;
-    // Standard button "pop" when clicked
-    Matter.Body.applyForce(this.body, this.body.position, { x: 0, y: -0.05 * this.body.mass });
-    console.log(`Button "${this.str}" clicked!`);
   }
 }

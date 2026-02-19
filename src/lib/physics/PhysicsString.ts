@@ -1,11 +1,9 @@
 import Matter from "matter-js";
-import {PhysicsObject} from "./PhysicsObject"
+import { PhysicsObject } from "./PhysicsObject";
 
 export class PhysicsString extends PhysicsObject {
   str: string;
   font: string;
-  crumble: boolean;
-  isSleeping: boolean;
 
   constructor(
     str: string,
@@ -14,26 +12,27 @@ export class PhysicsString extends PhysicsObject {
     y: number,
     world: Matter.World,
     isSleeping: boolean = false,
-    crumble: boolean = false,
-    color = "#ff6347"
+    color = "#ff6347",
   ) {
-    super(color);
+    super(x, y, world, isSleeping, color);
     this.str = str;
     this.font = font;
-    this.crumble = crumble;
-    this.isSleeping = isSleeping;
-    this.createBody(x, y, world);
+    this.body = this.createBody(x, y, world);
+    this.anchor = this.createAnchor(x, y, world);
     // console.log(`Created physics object at ${x} ${y} with string: ${str}`);
   }
 
-  createBody(x: number, y: number, world: Matter.World): void {
+  createBody(x: number, y: number, world: Matter.World): Matter.Body {
     const size = this.measureTextSize(this.str, this.font);
-    this.body = Matter.Bodies.rectangle(x, y, size.width + 8, size.height + 8, {
+
+    let body = Matter.Bodies.rectangle(x, y, size.width + 8, size.height + 8, {
       restitution: 0.95,
       friction: 0.1,
       isSleeping: this.isSleeping,
     });
-    Matter.World.add(world, this.body);
+
+    Matter.World.add(world, body);
+    return body;
   }
 
   update(ctx: CanvasRenderingContext2D) {
@@ -55,19 +54,22 @@ export class PhysicsString extends PhysicsObject {
     ctx.font = font;
     const metrics = ctx.measureText(text);
     const width = metrics.width;
-    const height = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
+    const height =
+      metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
     return { width: width * 0.75, height: height * 0.7 };
   }
 
-  mouseExited(mousePos: { x: number; y: number; }): void {
-  }
+  mouseExited(mousePos: { x: number; y: number }): void {}
 
-  mouseEntered(mousePos: { x: number; y: number; }): void {
+  mouseEntered(mousePos: { x: number; y: number }): void {
     this.body.isSleeping = false;
   }
 
-  mouseClickedOn(mousePos: { x: number; y: number; }): void {
+  mouseClickedOn(mousePos: { x: number; y: number }): void {
     this.body.isSleeping = false;
-    Matter.Body.applyForce(this.body, this.body.position, { x: 0, y: -0.05 * this.body.mass });
+    Matter.Body.applyForce(this.body, this.body.position, {
+      x: 0,
+      y: -0.05 * this.body.mass,
+    });
   }
 }

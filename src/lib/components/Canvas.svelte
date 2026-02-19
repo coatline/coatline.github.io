@@ -4,6 +4,7 @@
   import { Physics } from "$lib/physics/Physics";
   import { PhysicsString } from "$lib/physics/PhysicsString";
   import { HtmlToPhysics } from "$lib/physics/HtmlToPhysics";
+  import type { PhysicsObject } from "$lib/physics/PhysicsObject";
 
   let canvas: HTMLCanvasElement;
   let animationFrame: number;
@@ -16,11 +17,13 @@
     const physicsConverter = new HtmlToPhysics(physics);
     physicsConverter.initialize();
 
-    physics.objects.push(new PhysicsString(
-      "COATLINE", "bold 80px Arial", 
-      window.innerWidth / 2, 200, 
-      physics.world
-    ));
+    // let coatline = new PhysicsString(
+    //     "COATLINE", "bold 80px Arial", 
+    //     window.innerWidth / 2, 200, 
+    //     physics.world
+    // );
+
+    // physics.add(coatline);
 
     const loop = () => {
       physics.update(ctx);
