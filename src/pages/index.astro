@@ -1,5 +1,5 @@
 ---
-import FlowMesh from '../components/FlowMesh.svelte';
+import Scene from '../components/Scene.svelte';
 ---
 
 <html lang="en">
@@ -13,7 +13,6 @@ import FlowMesh from '../components/FlowMesh.svelte';
 	</head>
 	<body>
 		<h1>Coatline</h1>
-		<FlowMesh client:only="svelte" />
+		<Scene client:load />
 	</body>
 </html>
-

@@ -1,8 +1,4 @@
-# 🚀 My Portfolio Website
-
-A high-performance portfolio built with Astro, Svelte, and Matter.
-
-[View Live Demo](https://coatline.github.io)
+# Astro Starter Kit: Minimal
 
 ```sh
 npm create astro@latest -- --template minimal
@@ -41,3 +37,16 @@ All commands are run from the root of the project, from a terminal:
 | `npm run preview`         | Preview your build locally, before deploying     |
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
+
+## TODO:
+
+Title Screen: Coatline
+    Overview
+    Linkes (Resume, LinkedIn, GitHub)
+    Start Button  (all letters turn to physics objects and fade out)
+Projects
+Education Timeline
+Work Experience
+
+Skills
+Contact Form/Info
