@@ -1,54 +1,31 @@
-# Astro Starter Kit: Minimal
+# 🌀 Physics-Based Portfolio
 
-```sh
-npm create astro@latest -- --template minimal
-```
+A high-performance, interactive portfolio built with **SvelteKit** and **Matter.js**. This project transforms standard UI elements—text, headers, and buttons—into physical bodies that react to gravity, mouse interaction, and browser scroll events.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 🚀 The Vision
+Unlike static portfolios, this site treats content as physical matter.
+* **Scroll-Triggered Gravity:** Elements "fall" and crumble when they are scrolled past the top of the viewport.
+* **Elastic Recovery:** Using stiffness constraints, elements "snap" back to their original layout positions when scrolled back into view, creating a clean interpolation effect.
+* **Interactive Typography:** Text is rendered via Canvas and mapped to rigid bodies, allowing users to toss, swat, or click elements.
 
-## 🚀 Project Structure
+## 🛠️ Tech Stack
+* **Framework:** [SvelteKit](https://kit.svelte.dev/)
+* **Physics Engine:** [Matter.js](https://brm.io/matter-js/)
+* **Language:** TypeScript
+* **Rendering:** HTML5 Canvas (managed via Svelte lifecycle)
 
-Inside of your Astro project, you'll see the following folders and files:
+## 📁 Project Structure
+The project uses a clean OOP (Object-Oriented Programming) approach moved from a React architecture into SvelteKit's `$lib` structure.
 
 ```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## TODO:
-
-Title Screen: Coatline
-    Overview
-    Linkes (Resume, LinkedIn, GitHub)
-    Start Button (scrolls down)
-Projects
-Education Timeline
-Work Experience
-
-Skills
-Contact Form/Info
-
-When text objects touch the top of the screen, they fall down. When the top of the screen reaches above where they should normally be, they cleanly interpolate and snap back into that position.
+src/
+├── lib/
+│   ├── physics/           
+│   │   ├── PhysicsObject.ts # Abstract base class for physical entities
+│   │   └── PhysicsString.ts # Implementation for text-based physics
+│   └── components/        
+│       └── PhysicsCanvas.svelte # Lifecycle controller (onMount/onDestroy)
+├── routes/
+│   ├── +layout.svelte     # Persistent canvas & site-wide styles
+│   └── +page.svelte       # Home page content
+└── layout.css             # Global styles (custom scrollbars, resets)

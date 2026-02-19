@@ -1,32 +1,18 @@
 <script lang="ts">
 	import welcomeFallback from '$lib/images/svelte-welcome.png';
 	import welcome from '$lib/images/svelte-welcome.webp';
-
-	import Counter from './Counter.svelte';
+	import Canvas from '$lib/components/Canvas.svelte';
 </script>
 
 <svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
+	<title>Coatline</title>
+	<meta name="description" content="Coatline's Portfolio" />
 </svelte:head>
 
 <section>
-	<h1>
-		<span class="welcome">
-			<picture>
-				<source srcset={welcome} type="image/webp" />
-				<img src={welcomeFallback} alt="Welcome" />
-			</picture>
-		</span>
-
-		to your new<br />SvelteKit app
-	</h1>
-
-	<h2>
-		try editing <strong>src/routes/+page.svelte</strong>
-	</h2>
-
-	<Counter />
+	<Canvas />
+	<h1 class="physical">Coatline</h1>
+	<button class="physical">Start</button>
 </section>
 
 <style>
@@ -40,21 +26,22 @@
 
 	h1 {
 		width: 100%;
+		font-size: 4rem;
+		font-family: Arial, Helvetica, sans-serif;
+		text-align: center;
+		font-weight: bold;
+		color: "#ff6347";
 	}
 
-	.welcome {
-		display: block;
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
+	button{
+		margin-top: 2rem;
+		padding: 1rem 2rem;
+		font-size: 1.5rem;
+		font-weight: bold;
+		color: #fff;
+		background-color: #ff6347;
+		border: none;
+		border-radius: 8px;
+		cursor: pointer;
 	}
 </style>

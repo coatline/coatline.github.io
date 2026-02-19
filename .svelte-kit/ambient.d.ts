@@ -35,20 +35,15 @@ declare module '$env/static/private' {
 	export const CommonProgramW6432: string;
 	export const COMPUTERNAME: string;
 	export const ComSpec: string;
-	export const configsetroot: string;
 	export const DriverData: string;
 	export const EDITOR: string;
-	export const EFC_6760_1262719628: string;
-	export const EFC_6760_1592913036: string;
-	export const EFC_6760_2283032206: string;
-	export const EFC_6760_2775293581: string;
-	export const EFC_6760_3789132940: string;
+	export const EFC_9232_1262719628: string;
+	export const EFC_9232_1592913036: string;
+	export const EFC_9232_2283032206: string;
+	export const EFC_9232_2775293581: string;
+	export const EFC_9232_3789132940: string;
 	export const FONTAWESOME_TOKEN: string;
-	export const FPS_BROWSER_APP_PROFILE_STRING: string;
-	export const FPS_BROWSER_USER_PROFILE_STRING: string;
 	export const GIT_ASKPASS: string;
-	export const GK_GL_ADDR: string;
-	export const GK_GL_PATH: string;
 	export const HOME: string;
 	export const HOMEDRIVE: string;
 	export const HOMEPATH: string;
@@ -80,7 +75,6 @@ declare module '$env/static/private' {
 	export const npm_package_version: string;
 	export const NUMBER_OF_PROCESSORS: string;
 	export const OneDrive: string;
-	export const OneDriveCommercial: string;
 	export const OneDriveConsumer: string;
 	export const OS: string;
 	export const Path: string;
@@ -106,7 +100,6 @@ declare module '$env/static/private' {
 	export const USERDOMAIN_ROAMINGPROFILE: string;
 	export const USERNAME: string;
 	export const USERPROFILE: string;
-	export const VBOX_MSI_INSTALL_PATH: string;
 	export const VSCODE_GIT_ASKPASS_EXTRA_ARGS: string;
 	export const VSCODE_GIT_ASKPASS_MAIN: string;
 	export const VSCODE_GIT_ASKPASS_NODE: string;
@@ -114,7 +107,6 @@ declare module '$env/static/private' {
 	export const VSCODE_INJECTION: string;
 	export const VSCODE_PYTHON_AUTOACTIVATE_GUARD: string;
 	export const windir: string;
-	export const ZES_ENABLE_SYSMAN: string;
 }
 
 /**
@@ -153,20 +145,15 @@ declare module '$env/dynamic/private' {
 		CommonProgramW6432: string;
 		COMPUTERNAME: string;
 		ComSpec: string;
-		configsetroot: string;
 		DriverData: string;
 		EDITOR: string;
-		EFC_6760_1262719628: string;
-		EFC_6760_1592913036: string;
-		EFC_6760_2283032206: string;
-		EFC_6760_2775293581: string;
-		EFC_6760_3789132940: string;
+		EFC_9232_1262719628: string;
+		EFC_9232_1592913036: string;
+		EFC_9232_2283032206: string;
+		EFC_9232_2775293581: string;
+		EFC_9232_3789132940: string;
 		FONTAWESOME_TOKEN: string;
-		FPS_BROWSER_APP_PROFILE_STRING: string;
-		FPS_BROWSER_USER_PROFILE_STRING: string;
 		GIT_ASKPASS: string;
-		GK_GL_ADDR: string;
-		GK_GL_PATH: string;
 		HOME: string;
 		HOMEDRIVE: string;
 		HOMEPATH: string;
@@ -198,7 +185,6 @@ declare module '$env/dynamic/private' {
 		npm_package_version: string;
 		NUMBER_OF_PROCESSORS: string;
 		OneDrive: string;
-		OneDriveCommercial: string;
 		OneDriveConsumer: string;
 		OS: string;
 		Path: string;
@@ -224,7 +210,6 @@ declare module '$env/dynamic/private' {
 		USERDOMAIN_ROAMINGPROFILE: string;
 		USERNAME: string;
 		USERPROFILE: string;
-		VBOX_MSI_INSTALL_PATH: string;
 		VSCODE_GIT_ASKPASS_EXTRA_ARGS: string;
 		VSCODE_GIT_ASKPASS_MAIN: string;
 		VSCODE_GIT_ASKPASS_NODE: string;
@@ -232,7 +217,6 @@ declare module '$env/dynamic/private' {
 		VSCODE_INJECTION: string;
 		VSCODE_PYTHON_AUTOACTIVATE_GUARD: string;
 		windir: string;
-		ZES_ENABLE_SYSMAN: string;
 		[key: `PUBLIC_${string}`]: undefined;
 		[key: `${string}`]: string | undefined;
 	}
