@@ -15,7 +15,7 @@ export abstract class PhysicsObject {
     isSleeping: boolean,
     color: string,
   ) {
-    this.initialY = y;
+    this.initialY = y + window.scrollY;
     this.isSleeping = isSleeping;
     this.color = color;
   }
@@ -58,9 +58,10 @@ export abstract class PhysicsObject {
 
     const targetY = this.initialY - currentScrollY;
 
+    console.log(`Anchor Y: ${this.anchor.pointA.y}, Target Y: ${targetY}, Body Max Y: ${this.body.bounds.max.y}`);
     this.anchor.pointA.y = targetY;
 
-    if (targetY <= 0) {
+    if (targetY < window.innerHeight / 2) {
       this.isFallen = true;
       this.body.isSleeping = false;
       this.anchor.stiffness = 0;

@@ -9,11 +9,13 @@ export class Physics {
   constructor() {
     this.engine = Matter.Engine.create();
     this.world = this.engine.world;
-    this.engine.gravity.y = 1;
+    this.engine.gravity.y = 2;
     
     this.handleScroll = this.handleScroll.bind(this);
     window.addEventListener("scroll", this.handleScroll);
-    this.createGround();
+    this.handleScroll();
+    
+    this.createBounds();
   }
 
   add(obj: PhysicsObject) {
@@ -29,12 +31,12 @@ export class Physics {
   private handleScroll() {
     const scrollY = window.scrollY;
 
-      this.objects.forEach((obj) => {
+    this.objects.forEach((obj) => {
         obj.updateAnchor(scrollY);
-      });
+    });
   }
 
-  private createGround() {
+  private createBounds() {
     const ground = Matter.Bodies.rectangle(
       window.innerWidth / 2,
       window.innerHeight + 50,
@@ -42,7 +44,32 @@ export class Physics {
       100,
       { isStatic: true }
     );
-    Matter.World.add(this.world, ground);
+
+    const ceiling = Matter.Bodies.rectangle(
+      window.innerWidth / 2,
+      -500,
+      window.innerWidth * 2,
+      100,
+      { isStatic: true }
+    );
+
+    const leftWall = Matter.Bodies.rectangle(
+      -50,
+      window.innerHeight / 2,
+      100,
+      window.innerHeight * 5,
+      { isStatic: true }
+    );
+
+    const rightWall = Matter.Bodies.rectangle(
+      window.innerWidth + 50,
+      window.innerHeight / 2,
+      100,
+      window.innerHeight * 5,
+      { isStatic: true }
+    );
+
+    Matter.World.add(this.world, [ground, leftWall, rightWall]);
   }
 
   cleanup() {

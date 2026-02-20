@@ -1,4 +1,5 @@
 import { PhysicsString } from "./PhysicsString";
+import { PhysicsObject } from "./PhysicsObject";
 import {PhysicsButton} from "./PhysicsButton"
 import { Physics } from "./Physics";
 
@@ -28,18 +29,17 @@ export class HtmlToPhysics {
     const font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
 
     let obj: PhysicsObject;
-    let objY: number = y + window.scrollY; // Add scroll because BoundingRect is relative to viewport
 
     if (element.tagName === "BUTTON") {
       obj = new PhysicsButton(
         text,
         font,
         x,
-        objY,
+        y,
         rect.width,
         rect.height,
         this.physics.world,
-        false,
+        true,
         style.backgroundColor,
         style.color
       );
@@ -48,7 +48,7 @@ export class HtmlToPhysics {
         text,
         font,
         x,
-        objY,
+        y,
         this.physics.world,
         true,
         style.color,
