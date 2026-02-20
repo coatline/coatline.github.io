@@ -18,7 +18,6 @@ export class PhysicsString extends PhysicsObject {
     this.str = str;
     this.font = font;
     this.body = this.createBody(x, y, world);
-    this.anchor = this.createAnchor(x, y, world);
     // console.log(`Created physics object at ${x} ${y} with string: ${str}`);
   }
 

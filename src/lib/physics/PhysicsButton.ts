@@ -31,7 +31,6 @@ export class PhysicsButton extends PhysicsObject {
     this.text_color = text_color;
 
     this.body = this.createBody(x, y, world);
-    this.anchor = this.createAnchor(x, y, world);
   }
 
   createBody(x: number, y: number, world: Matter.World): Matter.Body {

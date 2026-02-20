@@ -6,7 +6,6 @@ export abstract class PhysicsObject {
   isSleeping: boolean;
   initialY: number;
   color: string;
-  isFallen: boolean = false;
 
   constructor(
     x: number,
@@ -22,23 +21,6 @@ export abstract class PhysicsObject {
 
   abstract createBody(x: number, y: number, world: Matter.World): Matter.Body;
 
-  protected createAnchor(
-    x: number,
-    y: number,
-    world: Matter.World,
-  ): Matter.Constraint {
-    let anchor = Matter.Constraint.create({
-      pointA: { x, y },
-      bodyB: this.body,
-      stiffness: 1.0,
-      damping: 0.1,
-      length: 0,
-    });
-
-    Matter.World.add(world, anchor);
-    return anchor;
-  }
-
   update(ctx: CanvasRenderingContext2D) {
     const { position, angle } = this.body;
 
@@ -53,24 +35,25 @@ export abstract class PhysicsObject {
     ctx.restore();
   }
 
-  updateAnchor(currentScrollY: number) {
-    if (this.isFallen) return;
-
+  updateScroll(currentScrollY: number) {
     const targetY = this.initialY - currentScrollY;
 
-    console.log(`Anchor Y: ${this.anchor.pointA.y}, Target Y: ${targetY}, Body Max Y: ${this.body.bounds.max.y}`);
-    this.anchor.pointA.y = targetY;
+    if (this.body.isSleeping) {
+        Matter.Body.setPosition(this.body, {
+            x: this.body.position.x,
+            y: targetY
+        });
+        
+        Matter.Body.setVelocity(this.body, { x: 0, y: 0 });
+    }
 
-    if (targetY < window.innerHeight / 2) {
-      this.isFallen = true;
-      this.body.isSleeping = false;
-      this.anchor.stiffness = 0;
-      this.anchor.damping = 0;
-      
-      Matter.Body.applyForce(this.body, this.body.position, { 
-        x: (Math.random() - 0.5) * 0.1, 
-        y: 0.01 
-      });
+    if (this.body.isSleeping && targetY < window.innerHeight / 2) {
+        this.body.isSleeping = false;
+        
+        Matter.Body.applyForce(this.body, this.body.position, { 
+            x: (Math.random() - 0.5) * 0.05, 
+            y: 0.01 
+        });
     }
   }
 }

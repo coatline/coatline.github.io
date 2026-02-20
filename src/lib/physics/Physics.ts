@@ -14,7 +14,7 @@ export class Physics {
     this.handleScroll = this.handleScroll.bind(this);
     window.addEventListener("scroll", this.handleScroll);
     this.handleScroll();
-    
+
     this.createBounds();
   }
 
@@ -32,7 +32,7 @@ export class Physics {
     const scrollY = window.scrollY;
 
     this.objects.forEach((obj) => {
-        obj.updateAnchor(scrollY);
+        obj.updateScroll(scrollY);
     });
   }
 
