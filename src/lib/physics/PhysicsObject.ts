@@ -39,13 +39,13 @@ export abstract class PhysicsObject {
       Matter.Body.setVelocity(this.body, { x: 0, y: 0 });
     }
     
-    draw(ctx);
+    this.draw(ctx);
   }
 
   draw(ctx: CanvasRenderingContext2D){
     ctx.save();
-    ctx.translate(position.x, position.y);
-    ctx.rotate(angle);
+    ctx.translate(this.body.position.x, this.body.position.y);
+    ctx.rotate(this.body.angle);
 
     this.displayHoverEffect(ctx);
 
