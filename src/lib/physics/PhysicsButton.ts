@@ -52,12 +52,12 @@ export class PhysicsButton extends PhysicsObject {
     ctx.translate(position.x, position.y);
     ctx.rotate(angle);
 
-    // Draw Box
+    this.displayHoverEffect(ctx);
+
     ctx.fillStyle = this.color;
     this.drawRoundedRect(ctx, -this.width / 2, -this.height / 2, this.width, this.height, this.borderRadius);
     ctx.fill();
 
-    // Draw Text using the property
     ctx.fillStyle = this.text_color;
     ctx.font = this.font;
     ctx.textAlign = "center";

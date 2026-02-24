@@ -39,6 +39,9 @@ export class PhysicsString extends PhysicsObject {
     ctx.save();
     ctx.translate(position.x, position.y);
     ctx.rotate(angle);
+
+    this.displayHoverEffect(ctx);
+
     ctx.fillStyle = this.color;
     ctx.font = this.font;
     ctx.textAlign = "center";
