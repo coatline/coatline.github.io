@@ -17,14 +17,6 @@
     const physicsConverter = new HtmlToPhysics(physics);
     physicsConverter.initialize();
 
-    // let coatline = new PhysicsString(
-    //     "COATLINE", "bold 80px Arial", 
-    //     window.innerWidth / 2, 200, 
-    //     physics.world
-    // );
-
-    // physics.add(coatline);
-
     const loop = () => {
       physics.update(ctx);
       animationFrame = requestAnimationFrame(loop);
