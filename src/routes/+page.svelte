@@ -1,8 +1,5 @@
 <script lang="ts">
     import Canvas from '$lib/components/Canvas.svelte';
-    import { onMount } from 'svelte';
-
-    // You can later add your Matter.js logic here to make these elements "physical"
 </script>
 
 <svelte:head>
