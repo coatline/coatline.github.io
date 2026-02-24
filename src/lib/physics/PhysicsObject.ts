@@ -5,6 +5,7 @@ export abstract class PhysicsObject {
   isHovered: boolean = false;
   body!: Matter.Body;
   isSleeping: boolean;
+  initialX: number;
   initialY: number;
   color: string;
 
@@ -16,6 +17,7 @@ export abstract class PhysicsObject {
     color: string,
   ) {
     this.initialY = y + window.scrollY;
+    this.initialX = x;
     this.isSleeping = isSleeping;
     this.color = color;
   }
@@ -24,7 +26,23 @@ export abstract class PhysicsObject {
 
   update(ctx: CanvasRenderingContext2D) {
     const { position, angle } = this.body;
+    
+    const targetY = this.initialY - window.scrollY;
+    
+    if (targetY > window.innerHeight / 2) {
+      let lerpFactor = 0.05;
 
+      let newX = this.body.position.x + (this.initialX - this.body.position.x) * lerpFactor;
+      let newY = this.body.position.y + (this.initialY - this.body.position.y) * lerpFactor;
+
+      Matter.Body.setPosition(this.body, { x: newX, y: newY });
+      Matter.Body.setVelocity(this.body, { x: 0, y: 0 });
+    }
+    
+    draw(ctx);
+  }
+
+  draw(ctx: CanvasRenderingContext2D){
     ctx.save();
     ctx.translate(position.x, position.y);
     ctx.rotate(angle);
@@ -60,6 +78,7 @@ export abstract class PhysicsObject {
   updateScroll(currentScrollY: number) {
     const targetY = this.initialY - currentScrollY;
 
+    // If we are stuck, simulate scrolling down the webpage
     if (this.body.isSleeping) {
       Matter.Body.setPosition(this.body, {
         x: this.body.position.x,
@@ -69,7 +88,8 @@ export abstract class PhysicsObject {
       Matter.Body.setVelocity(this.body, { x: 0, y: 0 });
     }
 
-    if (this.body.isSleeping && targetY < window.innerHeight / 2) {
+    if (targetY < window.innerHeight / 2) {
+      if(this.body.isSleeping == false) return;
       this.body.isSleeping = false;
 
       Matter.Body.applyForce(this.body, this.body.position, {
