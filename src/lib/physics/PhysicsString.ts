@@ -34,7 +34,7 @@ export class PhysicsString extends PhysicsObject {
     return body;
   }
 
-  update(ctx: CanvasRenderingContext2D) {
+  draw(ctx: CanvasRenderingContext2D) {
     const { position, angle } = this.body;
     ctx.save();
     ctx.translate(position.x, position.y);

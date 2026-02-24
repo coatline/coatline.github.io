@@ -26,25 +26,33 @@ export abstract class PhysicsObject {
 
   update(ctx: CanvasRenderingContext2D) {
     const { position, angle } = this.body;
-    
+
     const targetY = this.initialY - window.scrollY;
-    
-    if (targetY > window.innerHeight / 2) {
+
+    if (targetY > 0) {
       let lerpFactor = 0.05;
 
-      let newX = this.body.position.x + (this.initialX - this.body.position.x) * lerpFactor;
-      let newY = this.body.position.y + (this.initialY - this.body.position.y) * lerpFactor;
+      let newX =
+        this.body.position.x +
+        (this.initialX - this.body.position.x) * lerpFactor;
+      let newY =
+        this.body.position.y +
+        (this.initialY - this.body.position.y) * lerpFactor;
 
       Matter.Body.setPosition(this.body, { x: newX, y: newY });
-      Matter.Body.setVelocity(this.body, { x: 0, y: 0 });
+      this.body.angle = 0;
+      this.body.isSleeping = true;
     }
-    
+
     this.draw(ctx);
   }
 
-  draw(ctx: CanvasRenderingContext2D){
+  draw(ctx: CanvasRenderingContext2D) {
     ctx.save();
-    ctx.translate(this.body.position.x, this.body.position.y);
+
+    const visualY = this.body.position.y - window.scrollY;
+
+    ctx.translate(this.body.position.x, visualY);
     ctx.rotate(this.body.angle);
 
     this.displayHoverEffect(ctx);
@@ -58,12 +66,12 @@ export abstract class PhysicsObject {
 
   protected displayHoverEffect(ctx: CanvasRenderingContext2D) {
     if (this.isHovered) {
-        console.log("Hovered:", this);
-        ctx.strokeStyle = "white";
-        ctx.lineWidth = 4;
-        
-        ctx.shadowBlur = 25;
-        ctx.shadowColor = this.color;
+      console.log("Hovered:", this);
+      ctx.strokeStyle = "white";
+      ctx.lineWidth = 4;
+
+      ctx.shadowBlur = 25;
+      ctx.shadowColor = this.color;
     }
   }
 
@@ -88,8 +96,8 @@ export abstract class PhysicsObject {
       Matter.Body.setVelocity(this.body, { x: 0, y: 0 });
     }
 
-    if (targetY < window.innerHeight / 2) {
-      if(this.body.isSleeping == false) return;
+    if (targetY < window.innerHeight) {
+      if (this.body.isSleeping == false) return;
       this.body.isSleeping = false;
 
       Matter.Body.applyForce(this.body, this.body.position, {
