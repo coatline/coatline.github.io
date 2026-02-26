@@ -27,22 +27,22 @@ export abstract class PhysicsObject {
   update(ctx: CanvasRenderingContext2D) {
     const { position, angle } = this.body;
 
-    const targetY = this.initialY - window.scrollY;
+    // const targetY = this.initialY - window.scrollY;
 
-    if (targetY > 0) {
-      let lerpFactor = 0.05;
+    // if (targetY > window.innerHeight / 4) {
+    //   let lerpFactor = 0.05;
 
-      let newX =
-        this.body.position.x +
-        (this.initialX - this.body.position.x) * lerpFactor;
-      let newY =
-        this.body.position.y +
-        (this.initialY - this.body.position.y) * lerpFactor;
+    //   let newX =
+    //     this.body.position.x +
+    //     (this.initialX - this.body.position.x) * lerpFactor;
+    //   let newY =
+    //     this.body.position.y +
+    //     (this.initialY - this.body.position.y) * lerpFactor;
 
-      Matter.Body.setPosition(this.body, { x: newX, y: newY });
-      this.body.angle = 0;
-      this.body.isSleeping = true;
-    }
+    //   Matter.Body.setPosition(this.body, { x: newX, y: newY });
+    //   this.body.angle = 0;
+    //   this.body.isSleeping = true;
+    // }
 
     this.draw(ctx);
   }
@@ -50,7 +50,7 @@ export abstract class PhysicsObject {
   draw(ctx: CanvasRenderingContext2D) {
     ctx.save();
 
-    const visualY = this.body.position.y - window.scrollY;
+    const visualY = this.body.position.y;
 
     ctx.translate(this.body.position.x, visualY);
     ctx.rotate(this.body.angle);
@@ -76,6 +76,7 @@ export abstract class PhysicsObject {
   }
 
   updateHovered(isHovered: boolean) {
+    return;
     this.isHovered = isHovered;
 
     if (isHovered) {
@@ -95,8 +96,10 @@ export abstract class PhysicsObject {
 
       Matter.Body.setVelocity(this.body, { x: 0, y: 0 });
     }
+    else
+      return;
 
-    if (targetY < window.innerHeight) {
+    if (targetY < window.innerHeight / 4) {
       if (this.body.isSleeping == false) return;
       this.body.isSleeping = false;
 

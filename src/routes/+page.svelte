@@ -24,7 +24,7 @@
         
         <article class="project-card physical">
             <h3>Paper Towel Royale</h3>
-            <p>33,000+ lines of C# in Unity. Local multiplayer with deep inheritance systems.</p>
+            <p>40,000+ lines of C# in Unity. Local multiplayer with deep inheritance systems.</p>
         </article>
 
         <article class="project-card physical">
@@ -99,7 +99,6 @@
     }
 
     .physical {
-        /* These will be targeted by your Matter.js bridge */
         display: inline-block; 
         transition: opacity 0.3s;
     }
