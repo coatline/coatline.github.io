@@ -10,7 +10,7 @@
   <p class="cta-subtext">{subtext}</p>
   <div class="cta-actions">
     <a
-      href="mailto:hello@coatline.net"
+      href="mailto:coatlinestudios@gmail.com"
       class="cta-btn-primary"
     >
       Get In Touch

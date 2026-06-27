@@ -170,7 +170,7 @@
         If you have any business inquiries or even just questions, reach out!
       </p>
       <div class="cta-links">
-        <a href="mailto:hello@coatline.net" class="cta-btn-primary">
+        <a href="mailto:coatlinestudios@gmail.com" class="cta-btn-primary">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <rect x="2" y="4" width="20" height="16" rx="2" />
             <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
