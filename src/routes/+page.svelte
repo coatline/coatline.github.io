@@ -16,10 +16,10 @@
 </script>
 
 <svelte:head>
-  <title>Coatline — Solo Game Dev Studio</title>
+  <title>Coatline Studios</title>
   <meta
     name="description"
-    content="Coatline is the solo game dev studio of Bryler Castleberry. Making games that are fun, weird, and occasionally performant."
+    content="Making the games you want to play."
   />
 </svelte:head>
 
@@ -32,11 +32,11 @@
     <div class="hero-text">
       <div class="hero-tag" use:reveal={{ delay: 0 }}>
         <span class="tag-dot"></span>
-        Solo Game Dev Studio
+        Solo Game Dev
       </div>
       <h1 use:reveal={{ delay: 100 }}>Coatline</h1>
       <p class="hero-sub" use:reveal={{ delay: 200 }}>
-        I make games. Sometimes they even work.
+        I make games. Sometimes they're even fun.
       </p>
       <div class="hero-ctas" use:reveal={{ delay: 300 }}>
         <button class="cta-primary" onclick={() => scrollToSection("games")}>
@@ -93,6 +93,8 @@
     <GameJams projects={projects} />
   </section>
 
+  <!-- ==================== TODO: OTHER PROJECTS ==================== -->
+
   <!-- ==================== Life LOG ==================== -->
   <section id="devlog">
     <div class="section-header" use:reveal>
@@ -120,6 +122,10 @@
         </p>
         <p>
           I find satisfaction in both good games and scaleable systems.
+        </p>
+        <p>
+          I believe that Jesus historically rose from the dead, demonstrating that he is God.
+          I'm passionate about truth and thinking deeply.
         </p>
       </div>
 

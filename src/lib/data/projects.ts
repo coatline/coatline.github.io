@@ -47,7 +47,7 @@ export const projects: Project[] = [
     tags: ["C#", "Unity", "Local Multiplayer"],
     link: "https://store.steampowered.com/app/3269830/Paper_Towel_Royale/",
     longDescription:
-      "A chaotic local multiplayer game built entirely in Unity with over 40,000 lines of C#. Features deep inheritance hierarchies, dynamic physics, and couch co-op mayhem.",
+      "Imagine a platform-fighter with guns... and paper towels. Supporting 2-8 local multiplayer, you can team up or go solo in fast-paced PVP combat!",
     linkLabel: "Play on Steam",
     accentColor: "#4e4e4e",
   },
@@ -67,7 +67,7 @@ export const projects: Project[] = [
   },
   {
     id: "that-kid-life-jam",
-    title: "That Kid Life (Jam Version)",
+    title: "That Kid Life",
     start_date: "July 31, 2025",
     release_date: "August 3, 2025",
     tag_line: "Made for the GMTK Game Jam 2025",
