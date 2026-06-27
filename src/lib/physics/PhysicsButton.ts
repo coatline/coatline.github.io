@@ -19,15 +19,15 @@ export class PhysicsButton extends PhysicsObject {
     world: Matter.World,
     isSleeping: boolean = false,
     color = "#ff6347",
-    text_color = "#ffffff"
+    text_color = "#ffffff",
   ) {
     super(x, y, world, isSleeping, color);
-    
+
     this.str = str;
     this.font = font;
     this.width = width;
     this.height = height;
-    this.borderRadius = 8;
+    this.borderRadius = 10;
     this.text_color = text_color;
 
     this.body = this.createBody(x, y, world);
@@ -35,12 +35,13 @@ export class PhysicsButton extends PhysicsObject {
 
   createBody(x: number, y: number, world: Matter.World): Matter.Body {
     let body = Matter.Bodies.rectangle(x, y, this.width, this.height, {
-      restitution: 0.5,
-      friction: 0.1,
+      restitution: 0.4,
+      friction: 0.3,
+      frictionAir: 0.03,
       isSleeping: this.isSleeping,
-      chamfer: { radius: this.borderRadius } 
+      chamfer: { radius: this.borderRadius },
     });
-    
+
     Matter.World.add(world, body);
     return body;
   }
@@ -55,7 +56,14 @@ export class PhysicsButton extends PhysicsObject {
     this.displayHoverEffect(ctx);
 
     ctx.fillStyle = this.color;
-    this.drawRoundedRect(ctx, -this.width / 2, -this.height / 2, this.width, this.height, this.borderRadius);
+    this.drawRoundedRect(
+      ctx,
+      -this.width / 2,
+      -this.height / 2,
+      this.width,
+      this.height,
+      this.borderRadius,
+    );
     ctx.fill();
 
     ctx.fillStyle = this.text_color;
@@ -67,7 +75,14 @@ export class PhysicsButton extends PhysicsObject {
     ctx.restore();
   }
 
-  private drawRoundedRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
+  private drawRoundedRect(
+    ctx: CanvasRenderingContext2D,
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    r: number,
+  ) {
     ctx.beginPath();
     ctx.moveTo(x + r, y);
     ctx.lineTo(x + w - r, y);

@@ -1,110 +1,91 @@
 <script lang="ts">
-	import { resolve } from '$app/paths';
-	import { page } from '$app/state';
-	import github from '$lib/images/github.svg';
-	import logo from '$lib/images/svelte-logo.svg';
+  import github from "$lib/images/github.svg";
 </script>
 
 <header>
-	<!-- <div class="corner">
-		<a href="https://svelte.dev/docs/kit">
-			<img src={logo} alt="SvelteKit" />
-		</a>
-	</div> -->
+  <a href="/" class="logo">
+    <span class="logo-text">COATLINE</span>
+  </a>
 
-	<div class="corner">
-		<a href="https://github.com/coatline" target="_blank">
-			<img src={github} alt="GitHub" />
-		</a>
-	</div>
+  <nav>
+    <a href="#games">Games</a>
+    <a href="#jams">Jams</a>
+    <a href="#about">About</a>
+    <a href="https://github.com/coatline" target="_blank" rel="noopener noreferrer">
+      <img src={github} alt="GitHub" class="gh-icon" />
+    </a>
+  </nav>
 </header>
 
 <style>
-	header {
-		display: flex;
-		justify-content: space-between;
-	}
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2.5rem;
+    backdrop-filter: blur(20px);
+    background: rgba(10, 10, 10, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  }
 
-	.corner {
-		width: 3em;
-		height: 3em;
-	}
+  .logo {
+    text-decoration: none;
+  }
 
-	.corner a {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		height: 100%;
-	}
+  .logo-text {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: white;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
 
-	.corner img {
-		width: 2em;
-		height: 2em;
-		object-fit: contain;
-	}
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
 
-	nav {
-		display: flex;
-		justify-content: center;
-		--background: rgba(255, 255, 255, 0.7);
-	}
+  nav a {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.45);
+    text-decoration: none;
+    transition: color 0.2s ease;
+    letter-spacing: 0.04em;
+  }
 
-	svg {
-		width: 2em;
-		height: 3em;
-		display: block;
-	}
+  nav a:hover {
+    color: white;
+  }
 
-	path {
-		fill: var(--background);
-	}
+  .gh-icon {
+    width: 18px;
+    height: 18px;
+    filter: invert(1) brightness(0.7);
+    transition: filter 0.2s ease;
+  }
 
-	ul {
-		position: relative;
-		padding: 0;
-		margin: 0;
-		height: 3em;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		list-style: none;
-		background: var(--background);
-		background-size: contain;
-	}
+  nav a:hover .gh-icon {
+    filter: invert(1);
+  }
 
-	li {
-		position: relative;
-		height: 100%;
-	}
+  @media (max-width: 600px) {
+    header {
+      padding: 0.75rem 1.25rem;
+    }
 
-	li[aria-current='page']::before {
-		--size: 6px;
-		content: '';
-		width: 0;
-		height: 0;
-		position: absolute;
-		top: 0;
-		left: calc(50% - var(--size));
-		border: var(--size) solid transparent;
-		border-top: var(--size) solid var(--color-theme-1);
-	}
+    nav {
+      gap: 1.25rem;
+    }
 
-	nav a {
-		display: flex;
-		height: 100%;
-		align-items: center;
-		padding: 0 0.5rem;
-		color: var(--color-text);
-		font-weight: 700;
-		font-size: 0.8rem;
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
-		text-decoration: none;
-		transition: color 0.2s linear;
-	}
-
-	a:hover {
-		color: var(--color-theme-1);
-	}
+    nav a {
+      font-size: 0.75rem;
+    }
+  }
 </style>

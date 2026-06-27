@@ -18,15 +18,15 @@ export class PhysicsString extends PhysicsObject {
     this.str = str;
     this.font = font;
     this.body = this.createBody(x, y, world);
-    // console.log(`Created physics object at ${x} ${y} with string: ${str}`);
   }
 
   createBody(x: number, y: number, world: Matter.World): Matter.Body {
     const size = this.measureTextSize(this.str, this.font);
 
     let body = Matter.Bodies.rectangle(x, y, size.width + 8, size.height + 8, {
-      restitution: 0.95,
-      friction: 0.1,
+      restitution: 0.6,
+      friction: 0.3,
+      frictionAir: 0.02,
       isSleeping: this.isSleeping,
     });
 
@@ -61,17 +61,11 @@ export class PhysicsString extends PhysicsObject {
     return { width: width * 0.75, height: height * 0.7 };
   }
 
-  mouseExited(mousePos: { x: number; y: number }): void {}
-
-  mouseEntered(mousePos: { x: number; y: number }): void {
-    this.body.isSleeping = false;
-  }
-
   mouseClickedOn(mousePos: { x: number; y: number }): void {
     this.body.isSleeping = false;
     Matter.Body.applyForce(this.body, this.body.position, {
-      x: 0,
-      y: -0.05 * this.body.mass,
+      x: (Math.random() - 0.5) * 0.02,
+      y: -0.04 * this.body.mass,
     });
   }
 }

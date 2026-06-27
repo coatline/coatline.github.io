@@ -1,13 +1,13 @@
 import Matter from "matter-js";
 
 export abstract class PhysicsObject {
-  anchor!: Matter.Constraint;
   isHovered: boolean = false;
   body!: Matter.Body;
   isSleeping: boolean;
   initialX: number;
   initialY: number;
   color: string;
+  destroyed: boolean = false;
 
   constructor(
     x: number,
@@ -25,24 +25,19 @@ export abstract class PhysicsObject {
   abstract createBody(x: number, y: number, world: Matter.World): Matter.Body;
 
   update(ctx: CanvasRenderingContext2D) {
+    if (this.destroyed) return;
+
     const { position, angle } = this.body;
 
-    // const targetY = this.initialY - window.scrollY;
-
-    // if (targetY > window.innerHeight / 4) {
-    //   let lerpFactor = 0.05;
-
-    //   let newX =
-    //     this.body.position.x +
-    //     (this.initialX - this.body.position.x) * lerpFactor;
-    //   let newY =
-    //     this.body.position.y +
-    //     (this.initialY - this.body.position.y) * lerpFactor;
-
-    //   Matter.Body.setPosition(this.body, { x: newX, y: newY });
-    //   this.body.angle = 0;
-    //   this.body.isSleeping = true;
-    // }
+    if (this.body.isSleeping) {
+      const targetY = this.initialY - window.scrollY;
+      Matter.Body.setPosition(this.body, {
+        x: this.body.position.x,
+        y: targetY,
+      });
+      Matter.Body.setAngle(this.body, 0);
+      Matter.Body.setVelocity(this.body, { x: 0, y: 0 });
+    }
 
     this.draw(ctx);
   }
@@ -66,47 +61,40 @@ export abstract class PhysicsObject {
 
   protected displayHoverEffect(ctx: CanvasRenderingContext2D) {
     if (this.isHovered) {
-      console.log("Hovered:", this);
       ctx.strokeStyle = "white";
-      ctx.lineWidth = 4;
-
-      ctx.shadowBlur = 25;
+      ctx.lineWidth = 3;
+      ctx.shadowBlur = 20;
       ctx.shadowColor = this.color;
     }
   }
 
   updateHovered(isHovered: boolean) {
-    return;
     this.isHovered = isHovered;
-
-    if (isHovered) {
-    } else {
-    }
   }
 
   updateScroll(currentScrollY: number) {
     const targetY = this.initialY - currentScrollY;
 
-    // If we are stuck, simulate scrolling down the webpage
     if (this.body.isSleeping) {
       Matter.Body.setPosition(this.body, {
         x: this.body.position.x,
         y: targetY,
       });
-
       Matter.Body.setVelocity(this.body, { x: 0, y: 0 });
     }
-    else
-      return;
 
-    if (targetY < window.innerHeight / 4) {
-      if (this.body.isSleeping == false) return;
+    if (targetY < window.innerHeight * 0.15 && this.body.isSleeping) {
       this.body.isSleeping = false;
 
       Matter.Body.applyForce(this.body, this.body.position, {
-        x: (Math.random() - 0.5) * 0.05,
-        y: 0.01,
+        x: (Math.random() - 0.5) * 0.04,
+        y: 0.008 + Math.random() * 0.005,
       });
     }
+  }
+
+  destroy(world: Matter.World) {
+    this.destroyed = true;
+    Matter.World.remove(world, this.body);
   }
 }
